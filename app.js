@@ -27,7 +27,7 @@ app.use(express.json());
 
 // Route Middleware
 app.use("/api", usersRouter);
-app.use("/api/home", homeRouter);
+app.use("", homeRouter);
 app.use(middleware.errorHandler);
 
 module.exports = app;
