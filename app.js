@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 require("dotenv").config();
+const cors = require("cors");
 // Routes
 const usersRouter = require("./controllers/auth");
 const homeRouter = require("./controllers/home");
@@ -23,6 +24,7 @@ mongoose
     console.log("Error connecting to database:", error.message);
   });
 
+app.use(cors());
 app.use(express.json());
 
 // Route Middleware
