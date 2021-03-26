@@ -70,7 +70,7 @@ usersRouter.post(
     };
     const token = jwt.sign(userForToken, process.env.SECRET);
 
-    response.header("Authorization", `Bearer ${token}`).send(token);
+    response.send({ token });
   }
 );
 
