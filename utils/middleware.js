@@ -24,6 +24,10 @@ const loginValidation = (request, response, next) => {
 const errorHandler = (error, request, response, next) => {
   if (error.name === "ValidationError") {
     return response.status(400).json(error);
+  } else if (error.name === "JsonWebTokenError") {
+    return response.status(400).json(error);
+  } else if (error.name === "TokenExpiredError") {
+    return response.status(400).json(error);
   }
   next(error);
 };
@@ -39,8 +43,12 @@ const tokenExtractor = (request, response, next) => {
 
 // Verifies token,finds user and adds it to request object
 const userExtractor = async (request, response, next) => {
-  decodedToken = jwt.verify(request.token, process.env.SECRET);
-  request.user = await User.findById(decodedToken.id);
+  try {
+    decodedToken = jwt.verify(request.token, process.env.SECRET);
+    request.user = await User.findById(decodedToken.id);
+  } catch (error) {
+    next(error);
+  }
   next();
 };
 

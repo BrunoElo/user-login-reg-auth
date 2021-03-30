@@ -68,7 +68,10 @@ usersRouter.post(
       name: user.name,
       id: user._id,
     };
-    const token = jwt.sign(userForToken, process.env.SECRET);
+    const token = jwt.sign(userForToken, process.env.SECRET, {
+      expiresIn: "1h",
+    });
+    //response.cookie("token", token, { httpOnly: true });
 
     response.send({ token });
   }
